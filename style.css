@@ -1,0 +1,217 @@
+/* 전체 레이아웃 스타일 */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+}
+
+/* 네비바 스타일 */
+.navbar {
+  height: 100%;
+  width: 250px; /* 네비바 기본 열림 상태 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #f5f4f0;
+  overflow-x: hidden;
+  transition: width 0.3s; /* 너비 변경에 애니메이션 적용 */
+  padding-top: 60px;
+  z-index: 1000; /* 네비바가 다른 요소 위에 표시되도록 설정 */
+}
+
+/* 메인 컨텐츠 */
+#main-content {
+  margin-left: 250px; /* 네비바 공간을 확보 */
+  transition: margin-left 0.3s;
+  width: calc(100% - 250px); /* 네비바를 제외한 나머지 화면 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* 네비바 열기/닫기 버튼 */
+.toggle-btn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #f5f4f0;
+  color: rgb(46, 46, 46);
+  border: none;
+  padding: 10px;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1001;
+}
+
+/* 바둑판과 말풍선 레이아웃 */
+#board-container {
+  position: relative;
+  width: 600px;
+  height: 600px;
+  background: linear-gradient(to bottom, #e7d299, #ceb27f);
+  padding: 20px;
+  box-shadow: 0 10 10px rgba(0, 0, 0, 0.1);
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#board {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(19, 1fr);
+  grid-template-rows: repeat(19, 1fr);
+}
+
+.intersection {
+  position: relative;
+  cursor: pointer;
+}
+
+.intersection::before, .intersection::after {
+  content: "";
+  position: absolute;
+  background-color: #000;
+  z-index: 1;
+}
+
+.intersection::before {
+  top: 50%;
+  left: -50%;
+  right: -50%;
+  height: 1px;
+}
+
+.intersection::after {
+  left: 50%;
+  top: -50%;
+  bottom: -50%;
+  width: 1px;
+}
+
+.stone {
+  width: 95%;
+  height: 95%;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.black {
+  background: radial-gradient(circle at 30% 30%, #666, #000);
+  border: 0.5px solid #444;
+}
+
+.white {
+  background: radial-gradient(circle at 30% 30%, #fff, #e0e0e0);
+  border: 0.5px solid #ccc;
+}
+
+.hoshi {
+  position: relative;
+}
+
+.hoshi::before {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #000;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+/* 말풍선 스타일 */
+.comment-bubble {
+  position: absolute;
+  width: 200px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+  z-index: 100;
+}
+
+/* 왼쪽 상단 말풍선 */
+#left-comment {
+  top: 10px;
+  left: -240px;
+  animation: floatLeft 3s ease-in-out infinite;
+}
+
+#left-comment::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  right: -10px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid #ffffff;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+
+/* 오른쪽 하단 말풍선 */
+#right-comment {
+  bottom: 10px;
+  right: -240px;
+  animation: floatRight 3s ease-in-out infinite;
+}
+
+#right-comment::before {
+  content: "";
+  position: absolute;
+  bottom: 20px;
+  left: -10px;
+  width: 0;
+  height: 0;
+  border-right: 10px solid #ffffff;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+
+/* 말풍선의 둥둥 떠있는 효과 */
+@keyframes floatLeft {
+  0%, 100% {
+      transform: translateY(0);
+  }
+  50% {
+      transform: translateY(-15px);
+  }
+}
+
+@keyframes floatRight {
+  0%, 100% {
+      transform: translateY(0);
+  }
+  50% {
+      transform: translateY(15px);
+  }
+}
+
+
+/* 네비바 닫힐 때의 상태 */
+.navbar.closed {
+  width: 0;
+}
+
+#main-content.closed {
+  margin-left: 0;
+  width: 100%; /* 닫히면 전체 화면으로 확장 */
+}
